@@ -1,6 +1,27 @@
 from django.shortcuts import render
 # Import HttpResponse to send text-based responses
+from django.views.generic.edit import CreateView
+# Add UdpateView & DeleteView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+
 from .models import Cat
+
+# main-app/views.py
+
+class CatCreate(CreateView):
+    model = Cat
+    fields = ['name', 'breed', 'description', 'age']
+
+class CatUpdate(UpdateView):
+    model = Cat
+    # Let's disallow the renaming of a cat by excluding the name field!
+    fields = ['breed', 'description', 'age']
+
+class CatDelete(DeleteView):
+    model = Cat
+    success_url = '/cats/'
+
+
 
 def home(request):
     # Send a simple HTML response
